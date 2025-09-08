@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # Remove the user directive from nginx.conf
-RUN sed -i '/user/d' /etc/nginx/nginx.conf
+# RUN sed -i '/user/d' /etc/nginx/nginx.conf
 
 # Create necessary directories and set proper permissions
 RUN mkdir -p /var/cache/nginx/client_temp /var/run \
