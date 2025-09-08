@@ -4,6 +4,7 @@ FROM nginx:alpine
 # Copy your application code
 COPY index.html /usr/share/nginx/html/index.html
 
+EXPOSE 80
 # Change the ownership of the critical nginx directories to the root group
 # RUN chgrp -R 0 /var/cache/nginx /var/run /var/log/nginx && \
 #     chmod -R g=u /var/cache/nginx /var/run /var/log/nginx && \
