@@ -1,15 +1,19 @@
-# Use a base image that allows you to switch users
 FROM nginx:alpine
 
-# Copy your application code
-COPY index.html /usr/share/nginx/html/index.html
+# Remove the user directive from nginx.conf
+RUN sed -i '/user/d' /etc/nginx/nginx.conf
 
-EXPOSE 80
-# Change the ownership of the critical nginx directories to the root group
-# RUN chgrp -R 0 /var/cache/nginx /var/run /var/log/nginx && \
-#     chmod -R g=u /var/cache/nginx /var/run /var/log/nginx && \
-#     chmod g+w /var/cache/nginx
+# Create necessary directories and set proper permissions
+RUN mkdir -p /var/cache/nginx/client_temp /var/run \
+    && chmod -R 777 /var/cache/nginx /var/run
 
-# Optional: Specify the user (not strictly necessary but good practice)
-# The user 1001 is a common non-root user in many images.
-# USER 1001
+# Copy your custom nginx config if you have one
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy your application files
+COPY . /usr/share/nginx/html
+
+# Change ownership of nginx directories
+RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/run
+
+EXPOSE 8080
