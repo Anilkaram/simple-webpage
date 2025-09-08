@@ -11,12 +11,11 @@ RUN mkdir -p /var/cache/nginx/client_temp /var/run \
 RUN sed -i 's/listen\(.*\)80;/listen\18080;/g' /etc/nginx/conf.d/default.conf \
     && sed -i 's/listen\(.*\):80;/listen\1:8080;/g' /etc/nginx/conf.d/default.conf
 
-# Also update the main nginx.conf if it has listen directives
-RUN sed -i 's/listen\(.*\)80;/listen\18080;/g' /etc/nginx/nginx.conf \
-    && sed -i 's/listen\(.*\):80;/listen\1:8080;/g' /etc/nginx/nginx.conf
+# Copy your corrected nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy your application files
-COPY index.html /usr/share/nginx/html
+COPY . /usr/share/nginx/html
 
 # Expose port 8080
 EXPOSE 8080
