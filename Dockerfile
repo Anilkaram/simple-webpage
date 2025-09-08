@@ -16,7 +16,7 @@ RUN sed -i 's/listen\(.*\)80;/listen\18080;/g' /etc/nginx/nginx.conf \
     && sed -i 's/listen\(.*\):80;/listen\1:8080;/g' /etc/nginx/nginx.conf
 
 # Copy your application files
-COPY . /usr/share/nginx/html
+COPY index.html /usr/share/nginx/html
 
 # Expose port 8080
 EXPOSE 8080
